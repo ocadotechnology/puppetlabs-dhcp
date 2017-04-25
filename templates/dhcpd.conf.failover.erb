@@ -10,10 +10,10 @@ failover peer "dhcp-failover" {
         load balance max seconds <%= @load_balance %>;
 <% if @role == "primary" -%>
         mclt <%= @mclt %>;
-<%   if @auto_partner_down -%>
-        auto-partner-down <%= @auto_partner_down %>;
-<%   end -%>
         split <%= @load_split %>;
+<% end -%>
+<% if @auto_partner_down -%>
+        auto-partner-down <%= @auto_partner_down %>;
 <% end -%>
 }
 # END DHCP Failover
