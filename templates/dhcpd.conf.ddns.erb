@@ -8,6 +8,9 @@ ddns-update-style <%= @ddns_update_style %>;
 update-static-leases <%= @ddns_update_static %>;
 update-optimization <%= @ddns_update_optimize %>;
 use-host-decl-names on;
+<% if @ddns_ttl -%>
+ddns-ttl <%= @ddns_ttl %>;
+<% end -%>
 
 # Key from bind
 include "<%= @dnsupdatekey %>";
