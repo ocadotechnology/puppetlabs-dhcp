@@ -2,6 +2,7 @@
 #
 class dhcp (
   $dnsdomain            = undef,
+  $primary_dnsdomain    = undef,
   $nameservers          = [ '8.8.8.8', '8.8.4.4' ],
   $nameservers_ipv6     = [],
   $ntpservers           = [],

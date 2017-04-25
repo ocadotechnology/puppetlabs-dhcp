@@ -17,7 +17,12 @@ log-facility <%= @logfacility %>;
 # ----------
 # Options
 # ----------
-option domain-name "<%= @dnsdomain_real.first %>";
+<% if @primary_dnsdomain -%>
+<%   _primary_dnsdomain = @primary_dnsdomain -%>
+<% else -%>
+<%   _primary_dnsdomain = @dnsdomain_real.first -%>
+<% end -%>
+option domain-name "<%= _primary_dnsdomain %>";
 <% if @nameservers && !@nameservers.empty? -%>
 option domain-name-servers <%= @nameservers.join(', ') %>;
 <% end -%>
