@@ -1,9 +1,11 @@
+# == Define: dhcp::ignoredsubnet
+#
 define dhcp::ignoredsubnet (
   $network,
   $mask,
 ) {
 
-  include dhcp::params
+  include ::dhcp::params
 
   $dhcp_dir = $dhcp::params::dhcp_dir
 

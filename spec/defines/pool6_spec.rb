@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe 'dhcp::pool', type: :define do
+describe 'dhcp::pool6', type: :define do
   let :title do
-    'test_pool'
+    'test_pool6'
   end
   let(:facts) do
     {
@@ -12,10 +12,9 @@ describe 'dhcp::pool', type: :define do
   end
   let :params do
     {
-      'gateway'  => '1.1.1.1',
-      'mask'     => '255.255.255.0',
-      'network'  => '1.1.1.0',
-      'range'    => ['1.1.1.100', '1.1.1.110']
+      'network'  => '2001:db8::',
+      'prefix'   => '64',
+      'range'    => '2001:db8::100 2001:db8::110'
     }
   end
 

@@ -3,8 +3,8 @@
 class dhcp::params {
 
   case $::osfamily {
-    'debian': {
-      if ( $::operatingsystem == 'ubuntu' ) {
+    'Debian': {
+      if ( $::operatingsystem == 'Ubuntu' ) {
         if (versioncmp($::operatingsystemrelease, '12.04') >= 0) {
           $dhcp_dir    = '/etc/dhcp'
         } else {
@@ -17,23 +17,31 @@ class dhcp::params {
       $servicename      = 'isc-dhcp-server'
       $package_provider = undef
     }
-    'darwin': {
+    'Darwin': {
       $dhcp_dir         = '/opt/local/etc/dhcp'
       $packagename      = 'dhcp'
       $servicename      = 'org.macports.dhcpd'
       $package_provider = 'macports'
     }
-    'freebsd': {
+    'FreeBSD': {
       $dhcp_dir         = '/usr/local/etc'
       $packagename      = 'net/isc-dhcp42-server'
       $servicename      = 'isc-dhcpd'
       $package_provider = undef
     }
-    'redhat': {
+    'RedHat': {
       $dhcp_dir         = '/etc/dhcp'
       $packagename      = 'dhcp'
       $servicename      = 'dhcpd'
       $package_provider = undef
+    }
+    'Archlinux': {
+      $dhcp_dir         = '/etc'
+      $packagename      = 'dhcp'
+      # we currently do not manage the dhcpd6 config
+      #$servicename      = ['dhcpd4.service', 'dhcpd6.service']
+      $servicename      = ['dhcpd4.service']
+      $package_provider = 'pacman'
     }
     default: {
       fail('dhcp is supported on the following OS\'s: Debian, Ubuntu, Darwin, FreeBSD, RedHat, Fedora, and CentOS.')

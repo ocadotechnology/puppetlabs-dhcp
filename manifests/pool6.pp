@@ -1,10 +1,10 @@
-# == Define: dhcp::pool
+# == Define: dhcp::pool6
 #
-define dhcp::pool (
+define dhcp::pool6 (
   $network,
-  $mask,
-  $gateway          = '',
+  $prefix,
   $range            = '',
+  $range_temp       = '',
   $failover         = '',
   $options          = '',
   $parameters       = '',
@@ -25,6 +25,6 @@ define dhcp::pool (
 
   concat::fragment { "dhcp_pool_${name}":
     target  => "${dhcp_dir}/dhcpd.pools",
-    content => template('dhcp/dhcpd.pool.erb'),
+    content => template('dhcp/dhcpd.pool6.erb'),
   }
 }
