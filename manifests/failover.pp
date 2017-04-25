@@ -8,6 +8,7 @@ class dhcp::failover (
   $max_response_delay   = '30',
   $max_unacked_updates  = '10',
   $mclt                 = '300',
+  $auto_partner_down    = undef,
   $load_split           = '128',
   $load_balance         = '3',
   $omapi_key            = '',
