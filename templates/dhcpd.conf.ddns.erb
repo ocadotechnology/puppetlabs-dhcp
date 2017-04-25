@@ -14,13 +14,23 @@ ddns-ttl <%= @ddns_ttl %>;
 
 # Key from bind
 include "<%= @dnsupdatekey %>";
+<% if @ddns_nameserver -%>
+<%   _ddns_nameserver = @ddns_nameserver -%>
+<% elsif @nameservers && !@nameservers.empty? -%>
+<%   _ddns_nameserver = @nameservers.first -%>
+<% end -%>
+<% if @ddns_nameserver_ipv6 -%>
+<%   _ddns_nameserver_ipv6 = @ddns_nameserver_ipv6 -%>
+<% elsif @nameservers_ipv6 && !@nameservers_ipv6.empty? -%>
+<%   _ddns_nameserver_ipv6 = @nameservers_ipv6.first -%>
+<% end -%>
 <% @dnsdomain_real.each do |dom| -%>
 zone <%= dom %>. {
-<% if @nameservers && !@nameservers.empty? -%>
-  primary <%= @nameservers.first %>;
+<% if _ddns_nameserver -%>
+  primary <%= _ddns_nameserver %>;
 <% end -%>
-<% if @nameservers_ipv6 && !@nameservers_ipv6.empty? -%>
-  primary6 <%= @nameservers_ipv6.first %>;
+<% if _ddns_nameserver_ipv6 -%>
+  primary6 <%= _ddns_nameserver_ipv6 %>;
 <% end -%>
   key <%= @_dnskeyname %>;
 }

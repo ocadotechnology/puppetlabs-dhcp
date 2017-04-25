@@ -18,6 +18,8 @@ class dhcp (
   $ddns_update_style    = 'interim',
   $dnskeyname           = undef,
   $ddns_ttl             = undef,
+  $ddns_nameserver      = undef,
+  $ddns_nameserver_ipv6 = undef,
   $ddns_update_static   = 'on',
   $ddns_update_optimize = 'on',
   $pxeserver            = undef,
