@@ -3,12 +3,14 @@
 define dhcp::host (
   $ip,
   $mac,
+  $settings = {},
   $options = {},
   $comment='',
   $ignored = false,
 ) {
 
   validate_string($ip, $mac, $comment)
+  validate_hash($settings)
   validate_hash($options)
   validate_bool($ignored)
 
