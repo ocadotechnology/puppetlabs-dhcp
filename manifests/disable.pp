@@ -2,8 +2,8 @@
 # Remove and Disable the DHCP server
 # ----------
 class dhcp::disable (
-  $packagename = $dhcp::params::packagename,
-  $servicename = $dhcp::params::servicename,
+  String  $packagename = $dhcp::params::packagename,
+  String  $servicename = $dhcp::params::servicename,
 ) inherits dhcp::params {
 
 

@@ -1,56 +1,56 @@
 # == Class: dhcp
 #
 class dhcp (
-  $dnsdomain            = undef,
-  $primary_dnsdomain    = undef,
-  $nameservers          = [ '8.8.8.8', '8.8.4.4' ],
-  $nameservers_ipv6     = [],
-  $ntpservers           = [],
-  $dnssearchdomains     = [],
-  $dhcp_conf_header     = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ddns       = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_ntp        = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_pxe        = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_extra      = 'INTERNAL_TEMPLATE',
-  $dhcp_conf_fragments = {},
-  $interfaces           = undef,
-  $interface            = 'NOTSET',
-  $dnsupdatekey         = undef,
-  $ddns_update_style    = 'interim',
-  $dnskeyname           = undef,
-  $ddns_ttl             = undef,
-  $ddns_nameserver      = undef,
-  $ddns_nameserver_ipv6 = undef,
-  $ddns_update_static   = 'on',
-  $ddns_update_optimize = 'on',
-  $pxeserver            = undef,
-  $pxefilename          = undef,
-  $mtu                  = undef,
-  $ipxe_filename        = undef,
-  $ipxe_bootstrap       = undef,
-  $logfacility          = 'daemon',
-  $default_lease_time   = 43200,
-  $max_lease_time       = 86400,
-  $service_ensure       = running,
-  $globaloptions        = '',
-  $omapi_port           = undef,
-  $authoritative        = true,
-  $extra_config         = '',
-  $dhcp_dir             = $dhcp::params::dhcp_dir,
-  $dhcpd_conf_filename  = 'dhcpd.conf',
-  $packagename          = $dhcp::params::packagename,
-  $servicename          = $dhcp::params::servicename,
-  $package_provider     = $dhcp::params::package_provider,
-  $ldap_port            = 389,
-  $ldap_server          = 'localhost',
-  $ldap_username        = 'cn=root, dc=example, dc=com',
-  $ldap_password        = '',
-  $ldap_base_dn         = 'dc=example, dc=com',
-  $ldap_method          = 'dynamic',
-  $ldap_debug_file      = undef,
-  $use_ldap             = false,
-  $option_code150_label = 'pxegrub',
-  $option_code150_value = 'text',
+  Optional[Array]             $dnsdomain            = undef,
+  Optional[String]            $primary_dnsdomain    = undef,
+  Array                       $nameservers          = [ '8.8.8.8', '8.8.4.4' ],
+  Array                       $nameservers_ipv6     = [],
+  Array                       $ntpservers           = [],
+  Array                       $dnssearchdomains     = [],
+  String                      $dhcp_conf_header     = 'INTERNAL_TEMPLATE',
+  String                      $dhcp_conf_ddns       = 'INTERNAL_TEMPLATE',
+  String                      $dhcp_conf_ntp        = 'INTERNAL_TEMPLATE',
+  String                      $dhcp_conf_pxe        = 'INTERNAL_TEMPLATE',
+  String                      $dhcp_conf_extra      = 'INTERNAL_TEMPLATE',
+  Hash                        $dhcp_conf_fragments  = {},
+  Optional[Array]             $interfaces           = undef,
+  String                      $interface            = 'NOTSET',
+  Optional[String]            $dnsupdatekey         = undef,
+  String                      $ddns_update_style    = 'interim',
+  Optional[String]            $dnskeyname           = undef,
+  Optional[String]            $ddns_ttl             = undef,
+  Optional[String]            $ddns_nameserver      = undef,
+  Optional[String]            $ddns_nameserver_ipv6 = undef,
+  String                      $ddns_update_static   = 'on',
+  String                      $ddns_update_optimize = 'on',
+  Optional[String]            $pxeserver            = undef,
+  Optional[String]            $pxefilename          = undef,
+  Optional[Integer]           $mtu                  = undef,
+  Optional[String]            $ipxe_filename        = undef,
+  Optional[String]            $ipxe_bootstrap       = undef,
+  String                      $logfacility          = 'daemon',
+  Integer                     $default_lease_time   = 43200,
+  Integer                     $max_lease_time       = 86400,
+  Enum['stopped', 'running']  $service_ensure       = running,
+  Variant[String, Array]      $globaloptions        = '',
+  Optional[Integer]           $omapi_port           = undef,
+  Boolean                     $authoritative        = true,
+  String                      $extra_config         = '',
+  String                      $dhcp_dir             = $dhcp::params::dhcp_dir,
+  String                      $dhcpd_conf_filename  = 'dhcpd.conf',
+  String                      $packagename          = $dhcp::params::packagename,
+  String                      $servicename          = $dhcp::params::servicename,
+  Optional[String]            $package_provider     = $dhcp::params::package_provider,
+  Integer                     $ldap_port            = 389,
+  String                      $ldap_server          = 'localhost',
+  String                      $ldap_username        = 'cn=root, dc=example, dc=com',
+  String                      $ldap_password        = '',
+  String                      $ldap_base_dn         = 'dc=example, dc=com',
+  Enum['dynamic', 'static']   $ldap_method          = 'dynamic',
+  Optional[String]            $ldap_debug_file      = undef,
+  Boolean                     $use_ldap             = false,
+  String                      $option_code150_label = 'pxegrub',
+  String                      $option_code150_value = 'text',
 ) inherits dhcp::params {
 
   if $dnsdomain == undef {
@@ -62,13 +62,7 @@ class dhcp (
   } else {
     $dnsdomain_real = $dnsdomain
   }
-  validate_array($dnsdomain_real)
-  validate_array($dnssearchdomains)
 
-  validate_array($nameservers)
-  validate_array($nameservers_ipv6)
-  validate_array($ntpservers)
-  validate_bool($authoritative)
 
   if $pxeserver or $pxefilename {
     if ! $pxeserver or ! $pxefilename {
@@ -82,9 +76,6 @@ class dhcp (
     }
   }
 
-  if $mtu {
-    validate_integer($mtu)
-  }
 
   # Incase people set interface instead of interfaces work around
   # that. If they set both, use interfaces and the user is a unwise
@@ -239,7 +230,6 @@ class dhcp (
   }
 
   # check if this is really a bool
-  validate_bool($use_ldap)
   if $use_ldap {
     unless ($ldap_method in ['dynamic', 'static']) {
       fail('$ldap_method must be dynamic or static')

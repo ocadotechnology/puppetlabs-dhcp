@@ -1,18 +1,13 @@
 # == Define: dhcp::host
 #
 define dhcp::host (
-  $ip,
-  $mac,
-  $settings = {},
-  $options = {},
-  $comment='',
-  $ignored = false,
+  String   $ip,
+  String   $mac,
+  Hash     $settings = {},
+  Hash     $options = {},
+  String   $comment='',
+  Boolean  $ignored = false,
 ) {
-
-  validate_string($ip, $mac, $comment)
-  validate_hash($settings)
-  validate_hash($options)
-  validate_bool($ignored)
 
   $host = $name
 

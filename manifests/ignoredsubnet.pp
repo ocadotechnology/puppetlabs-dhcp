@@ -1,8 +1,8 @@
 # == Define: dhcp::ignoredsubnet
 #
 define dhcp::ignoredsubnet (
-  $network,
-  $mask,
+  String  $network,
+  String  $mask,
 ) {
 
   include ::dhcp::params
