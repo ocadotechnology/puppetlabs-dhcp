@@ -1,23 +1,20 @@
 # == Define: dhcp::pool
 #
 define dhcp::pool (
-  $network,
-  $mask,
-  $gateway          = '',
-  $range            = '',
-  $failover         = '',
-  $options          = '',
-  $parameters       = '',
-  $nameservers      = undef,
-  $nameservers_ipv6 = undef,
-  $pxeserver        = undef,
-  $mtu              = undef,
-  $domain_name      = '',
-  $ignore_unknown   = undef,
+  String                  $network,
+  String                  $mask,
+  String                  $gateway          = '',
+  Variant[String, Array]  $range            = '',
+  String                  $failover         = '',
+  Variant[String, Array]  $options          = '',
+  Variant[String, Array]  $parameters       = '',
+  Optional[Array]         $nameservers      = undef,
+  Optional[Array]         $nameservers_ipv6 = undef,
+  Optional[String]        $pxeserver        = undef,
+  Optional[Integer]       $mtu              = undef,
+  String                  $domain_name      = '',
+  Boolean                 $ignore_unknown   = false,
 ) {
-  if $mtu {
-    validate_integer($mtu)
-  }
 
   include ::dhcp::params
 
